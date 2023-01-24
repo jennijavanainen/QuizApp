@@ -6,7 +6,7 @@ const QuizzesPage = ({ quizzes }) => {
     <div>
       <h2>Available quizzes</h2>
       <ul>{quizzes.map(quiz =>
-        <li key={quiz.id}><Link to={`/quizzes/${quiz.id}`}>{quiz.name}</Link>, {quiz.questions} questions</li>
+        <li key={quiz.id}><Link to={`/quizzes/${quiz.id}`}>{quiz.name}</Link>, {quiz.questions.length} questions</li>
       )} </ul>
     </div>
   )
