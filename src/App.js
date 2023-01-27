@@ -5,7 +5,7 @@ import Navigation from './components/Navigation'
 import MainPage from './components/MainPage'
 import QuizzesPage from './components/QuizzesPage'
 import AdminPage from './components/AdminPage'
-import Quiz from './components/Quiz'
+import QuizPage from './components/QuizPage'
 import axios from 'axios'
 
 const App = () => {
@@ -33,7 +33,7 @@ const App = () => {
         <Route path='/' element={<MainPage />} />
         <Route path='/quizzes' element={<QuizzesPage quizzes={quizzes}/>} />
         <Route path='/admin' element={<AdminPage />} />
-        <Route path='/quizzes/:id' element={<Quiz quiz={quizToShow} />} />
+        {quizToShow && <Route path='/quizzes/:id' element={<QuizPage quiz={quizToShow} />} />}
       </Routes>
 
     </div>

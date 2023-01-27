@@ -1,6 +1,8 @@
 const AdminPage = () => {
   return (
-    <em>log in as admin</em>
+    <div>
+      <em>log in as admin</em>
+    </div>
   )
 }
 

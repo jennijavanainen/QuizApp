@@ -1,4 +1,5 @@
 import Question from './Question'
+
 const Quiz = ({ quiz }) => {
 
   if (quiz) {
