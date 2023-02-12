@@ -25,7 +25,6 @@ const Quiz = ({ quiz }) => {
 
   }
 
-
   if (quiz) {
     if (!showResults) {
       return (

@@ -6,17 +6,19 @@ import MainPage from './components/MainPage'
 import QuizzesPage from './components/QuizzesPage'
 import AdminPage from './components/AdminPage'
 import QuizPage from './components/QuizPage'
-import axios from 'axios'
+import quizService from './services/quizzes'
 
 const App = () => {
   const [quizzes, setQuizzes] = useState([])
 
   useEffect(() => {
-    console.log('useEffect')
-    axios
-      .get('http://localhost:3001/quizzes')
-      .then(response => {
-        setQuizzes(response.data)
+    quizService
+      .getAll()
+      .then(initialQuizzes => {
+        setQuizzes(initialQuizzes)
+      })
+      .catch(error => {
+        console.log("error", error)
       })
   }, [])
 
