@@ -48,7 +48,7 @@ const Quiz = ({ quiz }) => {
 
 export default Quiz
 
-const Result = ({ results}) => {
+const Result = ({ results }) => {
   return (
     <div>
       <h4>your result: {results.reduce((a, b) => a + b)}</h4>

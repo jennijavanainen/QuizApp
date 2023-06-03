@@ -1,7 +1,9 @@
-const AdminPage = () => {
+import LoginForm from './LoginForm'
+
+const AdminPage = ({ login }) => {
   return (
     <div>
-      <em>log in as admin</em>
+      <LoginForm login={login}/>
     </div>
   )
 }

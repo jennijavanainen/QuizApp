@@ -6,10 +6,21 @@ import MainPage from './components/MainPage'
 import QuizzesPage from './components/QuizzesPage'
 import AdminPage from './components/AdminPage'
 import QuizPage from './components/QuizPage'
+
 import quizService from './services/quizzes'
+import loginService from './services/login'
+import userService from './services/user'
 
 const App = () => {
   const [quizzes, setQuizzes] = useState([])
+  const [users, setUsers] = useState([])
+  const [currentUser, setCurrentUser] = useState(null)
+
+  useEffect(() => {
+    userService.getAll().then(allUsers =>
+      setUsers(allUsers)
+    )
+  }, [])
 
   useEffect(() => {
     quizService
@@ -22,19 +33,36 @@ const App = () => {
       })
   }, [])
 
+  const login = (username, password) => {
+    loginService.login({
+      username, password,
+    }).then(user => {
+      setCurrentUser(user)
+      userService.setUser(user)
+      console.log(`${user.name} logged in`)
+    }).catch(() => {
+      console.log('wrong username/password')
+    })
+  }
+
+  const logout = () => {
+    setCurrentUser(null)
+    userService.clearUser()
+  }
+
   const quizMatch = useMatch('/quizzes/:id')
   const quizToShow = quizMatch
-    ? quizzes.find(quiz => quiz.id === Number(quizMatch.params.id))
+    ? quizzes.find(quiz => quiz.id === quizMatch.params.id)
     : null
 
   return (
     <div className='container'>
-      <Navigation />
+      <Navigation username={currentUser? currentUser.name : null} logout={logout} />
       <h1>Quiz App</h1>
       <Routes>
         <Route path='/' element={<MainPage />} />
         <Route path='/quizzes' element={<QuizzesPage quizzes={quizzes}/>} />
-        <Route path='/admin' element={<AdminPage />} />
+        <Route path='/admin' element={<AdminPage login={login} users={users} />} />
         {quizToShow && <Route path='/quizzes/:id' element={<QuizPage quiz={quizToShow} />} />}
       </Routes>
 
