@@ -33,6 +33,17 @@ const App = () => {
       })
   }, [])
 
+  const createUser = (username, name, password) => {
+    userService.createUser({
+      username, name, password
+    }).then(newUser => {
+      setUsers(users.concat(newUser))
+      console.log(`${newUser.name} created`)
+    }).catch(() => {
+      console.log('username already exists')
+    })
+  }
+
   const login = (username, password) => {
     loginService.login({
       username, password,
@@ -62,7 +73,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<MainPage />} />
         <Route path='/quizzes' element={<QuizzesPage quizzes={quizzes}/>} />
-        <Route path='/admin' element={<AdminPage login={login} users={users} />} />
+        <Route path='/admin' element={<AdminPage login={login} users={users} createUser={createUser} />} />
         {quizToShow && <Route path='/quizzes/:id' element={<QuizPage quiz={quizToShow} />} />}
       </Routes>
 

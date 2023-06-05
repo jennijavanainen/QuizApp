@@ -34,8 +34,18 @@ const clearUser = () => {
   token = null
 }
 
+const createUser = (username, name, password) => {
+  const user = {
+    username: username,
+    name: name,
+    password: password
+  }
+    const request = axios.post(baseUrl, user)
+    return request.then(response => response.data)
+}
+
 const getToken = () => token
 
 export default {
-  setUser, getUser, clearUser, getToken, getAll
+  setUser, getUser, clearUser, getToken, getAll, createUser
 }
