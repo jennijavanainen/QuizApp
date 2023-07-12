@@ -1,8 +1,9 @@
-import LoginForm from './LoginForm'
-import CreateUserForm from './CreateUserForm'
+import LoginForm from '../LoginForm'
+import CreateUserForm from '../CreateUserForm'
 import { useState } from 'react'
+import CreateNewQuizForm from '../newQuizCreation/CreateNewQuizForm'
 
-const AdminPage = ({login, createUser, currentUser}) => {
+const AdminPage = ({login, createUser, currentUser, createQuiz}) => {
   const [showCreateUserForm, setShowCreateUserForm] = useState(false)
 
   const handleClick = () => {
@@ -25,7 +26,7 @@ const AdminPage = ({login, createUser, currentUser}) => {
       {currentUser &&
         <div>
           <h4>Welcome {currentUser.name}!</h4>
-          
+          <CreateNewQuizForm createQuiz={createQuiz} currentUser={currentUser} />
         </div>
       }
     </div>

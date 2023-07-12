@@ -6,6 +6,11 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const saveQuiz = (quiz) => {
+  const request = axios.post(baseURL, quiz)
+  return request.then(response => response.data)
+}
+
 export default {
-  getAll
+  getAll, saveQuiz
 }

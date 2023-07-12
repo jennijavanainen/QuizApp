@@ -1,4 +1,4 @@
-import Quiz from './Quiz'
+import Quiz from '../Quiz'
 import { useMemo } from 'react'
 
 const QuizPage = ({ quiz }) => {
