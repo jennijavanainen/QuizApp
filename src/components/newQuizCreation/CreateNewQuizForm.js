@@ -11,7 +11,7 @@ const CreateNewQuizForm = ({ createQuiz, currentUser }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    createQuiz({ name, description, showCorrectAnswers, currentUser, questions })
+    createQuiz({ name, description, showCorrectAnswers, creator:currentUser, questions })
     console.log('Quiz created:', {name, description, showCorrectAnswers, currentUser, questions})
 
     setName('')
@@ -19,21 +19,6 @@ const CreateNewQuizForm = ({ createQuiz, currentUser }) => {
     setShowCorrectAnswers(false)
     setQuestions([])
   }
-
-  const handleQuestionChange = (index, event) => {
-    const { name, value } = event.target;
-    const updatedQuestions = [...questions];
-    updatedQuestions[index][name] = value;
-    setQuestions(updatedQuestions);
-  };
-
-  const handleAnswerChange = (questionIndex, answerIndex, event) => {
-    const { value } = event.target;
-    const updatedQuestions = [...questions];
-    updatedQuestions[questionIndex].answers[answerIndex] = value;
-    setQuestions(updatedQuestions);
-  };
-
 
   const handleRemoveQuestion = (index) => {
     const updatedQuestions = [...questions];

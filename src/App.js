@@ -83,7 +83,9 @@ const App = () => {
       <Routes>
         <Route path='/' element={<MainPage />} />
         <Route path='/quizzes' element={<QuizzesPage quizzes={quizzes}/>} />
-        <Route path='/admin' element={<AdminPage login={login} currentUser={currentUser} createUser={createUser} createQuiz={createQuiz} />} />
+        <Route path='/admin' element={
+          <AdminPage login={login} currentUser={currentUser} createUser={createUser} createQuiz={createQuiz} quizzes={quizzes} />
+        } />
         {quizToShow && <Route path='/quizzes/:id' element={<QuizPage quiz={quizToShow} />} />}
       </Routes>
 
