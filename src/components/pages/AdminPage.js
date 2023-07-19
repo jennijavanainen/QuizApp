@@ -1,25 +1,26 @@
-import LoginForm from '../LoginForm'
-import CreateUserForm from '../CreateUserForm'
+import LoginForm from '../admin/LoginForm'
+import CreateUserForm from '../admin/CreateUserForm'
 import { useEffect, useState } from 'react'
 import CreateNewQuizForm from '../newQuizCreation/CreateNewQuizForm'
 import { Button } from 'react-bootstrap'
 import jwt_decode from 'jwt-decode'
+import QuizToShow from '../admin/QuizToShow'
 
-const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes}) => {
+const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes, deleteQuiz}) => {
   const [showCreateUserForm, setShowCreateUserForm] = useState(false)
   const [showQuizzes, setShowQuizzes] = useState(false)
   const [showQuizCreationForm, setShowQuizCreationForm] = useState(false)
   const [showMainAdmin, setShowMainAdmin] = useState(true)
   const [quizzesByUser, setQuizzesByUser] = useState([])
+  const [quizToShow, setQuizToShow] = useState(null)
 
   useEffect(() => {
-    if (currentUser.token) {
+    if (currentUser) {
       const decodedToken = jwt_decode(currentUser.token);
       const filteredQuizzes = quizzes.filter(quiz => quiz.creator === decodedToken.id);
       setQuizzesByUser(filteredQuizzes);
     }
   },[quizzes, currentUser])
-
 
   const handleCreateUserForm = () => {
     setShowCreateUserForm(!showCreateUserForm)
@@ -39,6 +40,11 @@ const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes}) => {
     setShowQuizCreationForm(false)
     setShowQuizzes(false)
     setShowMainAdmin(true)
+    setQuizToShow(null)
+  }
+
+  const openQuiz = (quiz) => {
+    setQuizToShow(quiz)
   }
 
   return (
@@ -77,7 +83,15 @@ const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes}) => {
           }
           {showQuizzes && <div>
             <h3>Manage your quizzes</h3>
-            {quizzesByUser.map((q) => <p key={q.id}>{q.name}</p> )}
+            {quizzesByUser.map((q) => <div key={q.id}>
+              <span onClick={() => openQuiz(q)} style={{cursor: 'pointer', color: 'blue', textDecoration: 'underline'}}>
+                {q.name}
+              </span>
+            </div>)}
+          </div>
+          }
+          {quizToShow && <div>
+            <QuizToShow quiz={quizToShow} deleteQuiz={deleteQuiz} setQuizToShow={setQuizToShow}/>
           </div>
           }
         </div>

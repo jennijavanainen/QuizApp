@@ -12,7 +12,6 @@ const CreateNewQuizForm = ({ createQuiz, currentUser }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     createQuiz({ name, description, showCorrectAnswers, creator:currentUser, questions })
-    console.log('Quiz created:', {name, description, showCorrectAnswers, currentUser, questions})
 
     setName('')
     setDescription('')

@@ -66,6 +66,15 @@ const App = () => {
     })
   }
 
+  const deleteQuiz = (quiz) => {
+    console.log('deleting quiz', quiz)
+    const confirmation = window.confirm(`Permanently delete quiz ${quiz.name} ?`)
+    if (confirmation) {
+      quizService.deleteQuiz(quiz.id)
+      setQuizzes(quizzes.filter(q => q.id !== quiz.id))
+    }
+  }
+
   const logout = () => {
     setCurrentUser(null)
     userService.clearUser()
@@ -84,7 +93,14 @@ const App = () => {
         <Route path='/' element={<MainPage />} />
         <Route path='/quizzes' element={<QuizzesPage quizzes={quizzes}/>} />
         <Route path='/admin' element={
-          <AdminPage login={login} currentUser={currentUser} createUser={createUser} createQuiz={createQuiz} quizzes={quizzes} />
+          <AdminPage
+            login={login}
+            currentUser={currentUser}
+            createUser={createUser}
+            createQuiz={createQuiz}
+            quizzes={quizzes}
+            deleteQuiz={deleteQuiz}
+          />
         } />
         {quizToShow && <Route path='/quizzes/:id' element={<QuizPage quiz={quizToShow} />} />}
       </Routes>
