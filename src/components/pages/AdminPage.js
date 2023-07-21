@@ -6,13 +6,14 @@ import { Button } from 'react-bootstrap'
 import jwt_decode from 'jwt-decode'
 import QuizToShow from '../admin/QuizToShow'
 
-const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes, deleteQuiz}) => {
+const AdminPage = ({ login, createUser, currentUser, createQuiz, quizzes, deleteQuiz, notifyWith }) => {
   const [showCreateUserForm, setShowCreateUserForm] = useState(false)
   const [showQuizzes, setShowQuizzes] = useState(false)
   const [showQuizCreationForm, setShowQuizCreationForm] = useState(false)
   const [showMainAdmin, setShowMainAdmin] = useState(true)
   const [quizzesByUser, setQuizzesByUser] = useState([])
   const [quizToShow, setQuizToShow] = useState(null)
+  const [userCreationSuccessful, setUserCreationSuccessful] = useState(false)
 
   useEffect(() => {
     if (currentUser) {
@@ -22,8 +23,19 @@ const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes, deleteQ
     }
   },[quizzes, currentUser])
 
+  useEffect(() => {
+    if (userCreationSuccessful) {
+      setShowCreateUserForm(false);
+    }
+  }, [userCreationSuccessful]);
+
   const handleCreateUserForm = () => {
     setShowCreateUserForm(!showCreateUserForm)
+    setUserCreationSuccessful(false)
+  }
+
+  const handleCreateUserSuccess = () => {
+    setUserCreationSuccessful(true);
   }
 
   const handleQuizzesVisibility = () => {
@@ -56,7 +68,7 @@ const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes, deleteQ
         </span>
         </em></h4>}
         {showCreateUserForm ?
-          (<CreateUserForm createUser={createUser} showLogin={handleCreateUserForm}/>) :
+          (<CreateUserForm createUser={createUser} showLogin={handleCreateUserForm} onSuccess={handleCreateUserSuccess} notifyWith={notifyWith}/>) :
           (<LoginForm login={login}/>)}
       </div>}
 
@@ -78,7 +90,7 @@ const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes, deleteQ
             </Button>
           }
           {showQuizCreationForm && <div>
-            <CreateNewQuizForm createQuiz={createQuiz} currentUser={currentUser} />
+            <CreateNewQuizForm createQuiz={createQuiz} currentUser={currentUser} notifyWith={notifyWith} />
           </div>
           }
           {showQuizzes && <div>
@@ -96,6 +108,7 @@ const AdminPage = ({login, createUser, currentUser, createQuiz, quizzes, deleteQ
           }
         </div>
       }
+      <Button style={{marginTop:"16px"}} href='/' variant='outline-primary' size='sm'>return to main page</Button>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import QuestionForm from './QuestionForm'
 import ShowQuestion from './ShowQuestion'
 
-const CreateNewQuizForm = ({ createQuiz, currentUser }) => {
+const CreateNewQuizForm = ({ createQuiz, currentUser, notifyWith }) => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false)
@@ -11,12 +11,17 @@ const CreateNewQuizForm = ({ createQuiz, currentUser }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    createQuiz({ name, description, showCorrectAnswers, creator:currentUser, questions })
 
-    setName('')
-    setDescription('')
-    setShowCorrectAnswers(false)
-    setQuestions([])
+    if (questions.length < 2) {
+      notifyWith('minimum two questions are required for a quiz', 'error')
+    } else {
+      createQuiz({ name, description, showCorrectAnswers, creator:currentUser, questions })
+
+      setName('')
+      setDescription('')
+      setShowCorrectAnswers(false)
+      setQuestions([])
+    }
   }
 
   const handleRemoveQuestion = (index) => {
@@ -60,7 +65,7 @@ const CreateNewQuizForm = ({ createQuiz, currentUser }) => {
           <ShowQuestion key={index} question={q} handleRemoveQuestion={handleRemoveQuestion} index={index}/>
         )}
       </div>}
-      <QuestionForm questions={questions} setQuestions={setQuestions} />
+      <QuestionForm questions={questions} setQuestions={setQuestions} notifyWith={notifyWith} />
       <Button variant="primary" type="submit">
         Save Quiz
       </Button>

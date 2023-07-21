@@ -3,8 +3,6 @@ import { Container, Nav, Navbar } from 'react-bootstrap'
 import React from 'react'
 
 const Navigation = ({username, logout}) => {
-  console.log('username:', username)
-
   const handleLogout = () => {
     logout()
   }

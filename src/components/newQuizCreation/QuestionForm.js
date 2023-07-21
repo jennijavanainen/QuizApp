@@ -2,31 +2,61 @@ import { Button, Form } from 'react-bootstrap'
 import React, { useState } from 'react'
 import "./questionStyle.css";
 
-const QuestionForm = ({ questions, setQuestions }) => {
+const QuestionForm = ({ questions, setQuestions, notifyWith }) => {
   const [question, setQuestion] = useState('')
   const [answers, setAnswers] = useState([])
   const [correct, setCorrect] = useState('')
   const [answerOption, setAnswerOption] = useState('')
 
+  const isNotEmptyString = (input) => {
+    const regex = /\S/
+    return regex.test(input)
+  }
+
+  const isValidString = (input) => {
+    const hasLetters = /[A-Za-z]/.test(input);
+    const containsOnlyNonLetters = /^[^A-Za-z]+$/.test(input);
+
+    return hasLetters && !containsOnlyNonLetters;
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const newQuestion = {
-      question: question,
-      answers: answers.map((a) => ({ option: a })),
-      correct: { answer: correct }
+    if (!question) {
+      notifyWith('question cannot be empty', 'error')
+    } else if (!isValidString(question)) {
+      notifyWith('question must contain letters', 'error')
+    } else if (answers < 3) {
+      notifyWith('minimum 2 answer options are required', 'error')
+    } else if (!correct) {
+      notifyWith('correct answer must be provided', 'error')
     }
-    console.log(newQuestion)
-    setQuestions(questions.concat(newQuestion))
-    setQuestion('')
-    setAnswers([])
-    setCorrect('')
+
+    else {
+      const newQuestion = {
+        question: question,
+        answers: answers.map((a) => ({ option: a })),
+        correct: { answer: correct }
+      }
+      setQuestions(questions.concat(newQuestion))
+      setQuestion('')
+      setAnswers([])
+      setCorrect('')
+
+      notifyWith('new question added')
+    }
   }
 
   const saveAnswer = (event) => {
     event.preventDefault()
-    setAnswers([...answers, answerOption])
-    setAnswerOption('')
+    if (isNotEmptyString(answerOption)) {
+      setAnswers([...answers, answerOption])
+      setAnswerOption('')
+    } else {
+      notifyWith('Answer option cannot be empty', 'error')
+    }
+
   }
 
   const deleteAnswerOption = (index) => {

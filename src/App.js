@@ -6,6 +6,7 @@ import MainPage from './components/pages/MainPage'
 import QuizzesPage from './components/pages/QuizzesPage'
 import AdminPage from './components/pages/AdminPage'
 import QuizPage from './components/pages/QuizPage'
+import Notification from './components/Notification'
 
 import quizService from './services/quizzes'
 import loginService from './services/login'
@@ -15,6 +16,7 @@ const App = () => {
   const [quizzes, setQuizzes] = useState([])
   const [users, setUsers] = useState([])
   const [currentUser, setCurrentUser] = useState(null)
+  const [info, setInfo] = useState({ message: null })
 
   useEffect(() => {
     userService.getAll().then(allUsers =>
@@ -29,18 +31,23 @@ const App = () => {
         setQuizzes(initialQuizzes)
       })
       .catch(error => {
-        console.log("error", error)
+        notifyWith(`Connection error`, 'error')
       })
   }, [])
 
-  const createUser = (username, name, password) => {
+  const createUser = (username, name, password, onSuccess) => {
     userService.createUser({
       username, name, password
     }).then(newUser => {
       setUsers(users.concat(newUser))
-      console.log(`${newUser.name} created`)
-    }).catch(() => {
-      console.log('username already exists')
+      notifyWith(`New user ${newUser.username} created`)
+      onSuccess()
+    }).catch(error=> {
+      if (error.response && error.response.status === 400) {
+        notifyWith(error.response.data.error, 'error')
+      } else {
+        notifyWith(`Error creating new user: ${error.message}`, 'error')
+      }
     })
   }
 
@@ -50,9 +57,9 @@ const App = () => {
     }).then(user => {
       setCurrentUser(user)
       userService.setUser(user)
-      console.log(`${user.name} logged in`)
+      notifyWith(`logged in as ${username}`)
     }).catch(() => {
-      console.log('wrong username/password')
+      notifyWith('wrong username or password', 'error')
     })
   }
 
@@ -60,24 +67,36 @@ const App = () => {
     console.log('saving quiz', quiz)
     quizService.saveQuiz(quiz).then(newQuiz => {
       setQuizzes(quizzes.concat(newQuiz))
-      console.log(`New quiz ${newQuiz.name} added`)
+      notifyWith(`New quiz ${newQuiz.name} added`)
     }).catch(() => {
-      console.log('error saving quiz')
+      notifyWith('error saving quiz', 'error')
     })
   }
 
   const deleteQuiz = (quiz) => {
-    console.log('deleting quiz', quiz)
-    const confirmation = window.confirm(`Permanently delete quiz ${quiz.name} ?`)
-    if (confirmation) {
-      quizService.deleteQuiz(quiz.id)
+    quizService.deleteQuiz(quiz.id).then(() => {
       setQuizzes(quizzes.filter(q => q.id !== quiz.id))
-    }
+      notifyWith(`${quiz.name} deleted`)
+    }).catch(() => {
+      notifyWith('quiz could not be deleted', 'error')
+    })
+
+  }
+
+  const notifyWith = (message, type='info') => {
+    setInfo({
+      message, type
+    })
+
+    setTimeout(() => {
+      setInfo({ message: null } )
+    }, 3000)
   }
 
   const logout = () => {
     setCurrentUser(null)
     userService.clearUser()
+    notifyWith('logged out')
   }
 
   const quizMatch = useMatch('/quizzes/:id')
@@ -89,9 +108,15 @@ const App = () => {
     <div className='container'>
       <Navigation username={currentUser? currentUser.name : null} logout={logout} />
       <h1>Quiz App</h1>
+      <Notification info={info} />
       <Routes>
         <Route path='/' element={<MainPage />} />
-        <Route path='/quizzes' element={<QuizzesPage quizzes={quizzes}/>} />
+        <Route path='/quizzes' element={
+          <QuizzesPage
+            quizzes={quizzes}
+            notifyWith={notifyWith}
+          />
+        }/>
         <Route path='/admin' element={
           <AdminPage
             login={login}
@@ -100,8 +125,9 @@ const App = () => {
             createQuiz={createQuiz}
             quizzes={quizzes}
             deleteQuiz={deleteQuiz}
+            notifyWith={notifyWith}
           />
-        } />
+        }/>
         {quizToShow && <Route path='/quizzes/:id' element={<QuizPage quiz={quizToShow} />} />}
       </Routes>
 

@@ -2,8 +2,11 @@ import { Button } from 'react-bootstrap'
 
 const QuizToShow = ({ quiz, deleteQuiz, setQuizToShow }) => {
   const removeQuiz = () => {
-    deleteQuiz(quiz)
-    setQuizToShow(null)
+    const confirmation = window.confirm(`Permanently delete quiz ${quiz.name} ?`)
+    if (confirmation) {
+      deleteQuiz(quiz)
+      setQuizToShow(null)
+    }
   }
 
   return (
