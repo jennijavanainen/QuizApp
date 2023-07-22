@@ -2,6 +2,7 @@ import Question from './Question'
 import { Form, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import update from 'react-addons-update'
+import { Link } from 'react-router-dom'
 
 const Quiz = ({ quiz, notifyWith }) => {
   const [results, setResults] = useState([])
@@ -77,9 +78,7 @@ const Result = ({ results, questions }) => {
   return (
     <div>
       <h3>Your result: {results.reduce((a, b) => a + b)}/{questions.length}</h3>
-      <Button variant='primary' href='/quizzes'>
-        try more quizzes
-      </Button>
+      <Link to='/quizzes'><Button>try more quizzes</Button></Link>
     </div>
   )
 }
