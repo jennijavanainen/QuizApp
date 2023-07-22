@@ -41,7 +41,7 @@ const Quiz = ({ quiz, notifyWith }) => {
                 freeze={false}
               />)}
             <Button variant='primary' type='submit'>save</Button>
-            <Button href='/quizzes' variant='secondary'>cancel</Button>
+            <Link to='/quizzes'><Button variant='secondary'>cancel</Button></Link>
           </Form>
         </div>
       )
