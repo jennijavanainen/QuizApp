@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# Quiz App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Full Stack Open -kurssin projektityö. Sovellus on tehty React/Node-combolla.
 
-## Available Scripts
+Sovellus pyörii Herokussa: https://fullstackmooc-quiz-app.herokuapp.com/
 
-In the project directory, you can run:
+### Quiz App on sovellus, jossa käyttäjä voi tehdä erilaisia tietovisoja. Rekisteröityneet käyttäjät voivat lisäksi lisätä omia tietovisoja sovellukseen.
 
-### `npm start`
+Sovelluksen tämänhetkiset ominaisuudet:
+- Tunnusten luominen: Käyttäjä voi rekisteröityä palveluun, jonka vaatimuksena on uniikki käyttäjätunnus ja vähintään 8 merkin pituinen salasana.
+- Sisäänkirjautuminen: Käyttäjä voi kirjautua sisään tunnuksillaan. Tämä jälkeen hän voi luoda uusia tietovisoja ja hallinnoida itse tekemiään tietovisoja.
+- Uuden tietovisan luominen: Kirjautunut käyttäjä voi luoda uuden tietovisan. Tietovisan vaatimuksina on nimi, kuvaus, vähintään yksi kysymys, jossa on vähintään kaksi vastausvaihtoehtoa, sekä määritelty yksi oikea vastaus. Vastausvaihtoehtoja voi olla muuten rajattomasti. Lisäksi käyttäjä voi valita, näytetäänkö tietovisan tekijälle oikeat vastauksen suorituksen jälkeen. 
+- Tietovisan poistaminen: Käyttäjä voi poistaa itse luomiaan tietovisoja.
+- Tietovisan tekeminen: Haluamansa tietovisan voi valita klikkaamalla. Tietovisassa tulee vastata ainakin yhteen kysymykseen. Kysymykset ovat yhden vastauksen monivalintakysymyksiä. Tietovisan voi peruuttaa cancel-nappulasta, jolloin sovellus palaa takaisin tietovisojen yhteisnäkymään. Save-nappulalla tietovisan vastaukset tarkistetaan ja käyttäjälle näytetään kokonaistulos. Jos tietovisassa on niin määritelty, näytetään myös oikeat ja väärät vastaukset.
+- Etusivulla on lyhyt kuvaus sovelluksesta, sekä randomilla valitut 5 tietovisaa, joihin pääsee suoraan klikkaamalla. Lisäksi alareunassa on linkki satunnaisesti valittuun tietovisaan.
+- Sovelluksen yläreunassa on navigointipalkki, jossa on mahdollista navigoida etusivun, tietovisasivun ja kirjautumis-/adminsivun välillä.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Sovelluksesta tällä hetkellä puuttuvia ominaisuuksia/piirteitä:
+- Design ja käyttäjäkeskeinen suunnittelu
+- Käyttäjätunnuksen hallinointi, salasanan palautus
+- Tietovisojen muokkausmahdollisuus
+- Tietovisojen kategorisointi ja lajittelu kategorioiden perusteella
+- Laskuri, joka kertoo kuinka monesti tietovisa on tehty
+- Mahdollisuus useampaan oikeaan vastaukseen sekä kuvien käyttöön kysymyksissä
+- Testiautomaatio
+- Validointia pitäisi olla huomattavasti enemmän, etenkin backendissa. Sovellus ei kestä rankkaa väärinkäyttöä.
+  
 
-### `npm test`
+Sovelluksen backend: https://github.com/jennijavanainen/QuizApp-backend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
