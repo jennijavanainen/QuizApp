@@ -41,6 +41,8 @@ const createUser = (user) => {
 
 const getToken = () => token
 
-export default {
+const exportedObject = {
   setUser, getUser, clearUser, getToken, getAll, createUser
-}
+};
+
+export default exportedObject

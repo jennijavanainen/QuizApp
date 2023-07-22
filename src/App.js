@@ -114,7 +114,6 @@ const App = () => {
         <Route path='/quizzes' element={
           <QuizzesPage
             quizzes={quizzes}
-            notifyWith={notifyWith}
           />
         }/>
         <Route path='/admin' element={
@@ -128,7 +127,12 @@ const App = () => {
             notifyWith={notifyWith}
           />
         }/>
-        {quizToShow && <Route path='/quizzes/:id' element={<QuizPage quiz={quizToShow} />} />}
+        {quizToShow && <Route path='/quizzes/:id' element={
+          <QuizPage
+            quiz={quizToShow}
+            notifyWith={notifyWith}
+          />}
+        />}
       </Routes>
 
     </div>

@@ -16,6 +16,8 @@ const deleteQuiz = (id) => {
   return request.then(response => response.data)
 }
 
-export default {
+const exportedObject = {
   getAll, saveQuiz, deleteQuiz,
-}
+};
+
+export default exportedObject

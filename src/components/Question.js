@@ -1,8 +1,10 @@
 import Form from 'react-bootstrap/Form'
 
-const Question = ({ q, answer, selected }) => {
+const Question = ({ q, answer, selected, freeze }) => {
   const handleOptionChange = (option) => {
-    answer(option.target.value)
+    if (!freeze) {
+      answer(option.target.value);
+    }
   }
 
   return (
@@ -11,8 +13,17 @@ const Question = ({ q, answer, selected }) => {
       <Form.Group>
         {q.answers.map(a =>
           <div key={a.id} className='mb-3'>
-            <Form.Check type='radio' id={a.id} label={a.option} value={a.option} checked={selected === a.option} onChange={handleOptionChange}/>
-          </div> )}
+            <Form.Check
+              type='radio'
+              id={a.id}
+              label={a.option}
+              value={a.option}
+              checked={selected === a.option}
+              onChange={handleOptionChange}
+              disabled={freeze}
+            />
+          </div>
+        )}
       </Form.Group>
     </div>
   )
