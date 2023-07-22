@@ -29,5 +29,7 @@ Sovelluksesta tällä hetkellä puuttuvia ominaisuuksia/piirteitä:
 
 Sovelluksen backend: https://github.com/jennijavanainen/QuizApp-backend
 
+Työtunnit: https://github.com/jennijavanainen/QuizApp/blob/master/tunnit.md
+
 
 
