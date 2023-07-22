@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseURL = 'http://localhost:3001/api/quizzes'
+const baseURL = '/api/quizzes'
 
 const getAll = () => {
   const request = axios.get(baseURL)
@@ -15,6 +15,7 @@ const deleteQuiz = (id) => {
   const request = axios.delete(`${baseURL}/${id}`, id)
   return request.then(response => response.data)
 }
+
 
 const exportedObject = {
   getAll, saveQuiz, deleteQuiz,
