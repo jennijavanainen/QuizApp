@@ -107,10 +107,12 @@ const App = () => {
   return (
     <div className='container'>
       <Navigation username={currentUser? currentUser.name : null} logout={logout} />
-      <h1>Quiz App</h1>
+      <h1 style={{marginBottom:"24px"}}>Quiz App</h1>
       <Notification info={info} />
       <Routes>
-        <Route path='/' element={<MainPage />} />
+        <Route path='/' element={
+          <MainPage quizzes={quizzes} />
+        }/>
         <Route path='/quizzes' element={
           <QuizzesPage
             quizzes={quizzes}

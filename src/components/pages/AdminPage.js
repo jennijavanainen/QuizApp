@@ -5,6 +5,7 @@ import CreateNewQuizForm from '../newQuizCreation/CreateNewQuizForm'
 import { Button } from 'react-bootstrap'
 import jwt_decode from 'jwt-decode'
 import QuizToShow from '../admin/QuizToShow'
+import { Link } from 'react-router-dom'
 
 const AdminPage = ({ login, createUser, currentUser, createQuiz, quizzes, deleteQuiz, notifyWith }) => {
   const [showCreateUserForm, setShowCreateUserForm] = useState(false)
@@ -108,7 +109,7 @@ const AdminPage = ({ login, createUser, currentUser, createQuiz, quizzes, delete
           }
         </div>
       }
-      <Button style={{marginTop:"16px"}} href='/' variant='outline-primary' size='sm'>return to main page</Button>
+      <Link style={{marginTop:"32px"}} to='/'>return to main page</Link>
     </div>
   )
 }

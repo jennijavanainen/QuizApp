@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
 
 const QuizzesPage = ({ quizzes }) => {
@@ -15,7 +15,7 @@ const QuizzesPage = ({ quizzes }) => {
           {quiz.questions.length} questions
         </ListGroupItem>
       )} </ListGroup>
-      <Button style={{marginTop:"16px"}} href='/' variant='outline-primary' size='sm'>return to main page</Button>
+      <Link style={{marginTop:"32px"}} to='/'>return to main page</Link>
     </div>
   )
 }
